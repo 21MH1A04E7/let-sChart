@@ -44,7 +44,7 @@ export const registerUser=async(req,res)=>{
 export const signUser=async(req,res)=>{
     try{
         const {email,password}=req.body
-        const user=await UserModel.findOne({email});
+        const user=await UserModel.findOne({email})
         if(!user){
             return res.status(400).json({
                 message:"User not found",
@@ -68,18 +68,37 @@ export const signUser=async(req,res)=>{
             email:user.email
         }
         const token=jwt.sign(payload,process.env.SECRET_KEY,{expiresIn:'1d'})
-
+        const {password:pass,...rest}=user._doc;
         return res.status(200).cookie('access_token',token).json({
-            message:"User logged in successfully",
-            data:null,
+            message:"User signUser in successfully",
+            data:rest,
             error:false,
             statusCode:200,
-            success:true,
-            access_token:token
+            success:true
         })
 
     }catch(err){
         console.log('internal error in userLogin')
+        return res.status(500).json({
+            message:err.message||err,
+            error:true,
+            statusCode:500,
+            success:false
+        })
+    }
+}
+
+export const userLogout=async(req,res)=>{
+    try{
+        return res.status(200).clearCookie('access_token').json({
+            message:"User logged out successfully",
+            data:null,
+            error:false,
+            statusCode:200,
+            success:true
+        })
+    }catch(err){
+        console.log('internal error in user logout')
         return res.status(500).json({
             message:err.message||err,
             error:true,
