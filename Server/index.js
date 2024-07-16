@@ -4,11 +4,13 @@ dotenv.config()
 import cors from 'cors'
 import os from 'os'
 import cluster from 'cluster'
+import cookieParser from 'cookie-parser'
 
 import DBConnection from './config/DBConnection.js'
+import authRouter from './router/auth.js'
+import userRouter from './router/user.js'
 
 const app=express();
-
 console.log(os.cpus().length)
 
 //database connection
@@ -22,6 +24,7 @@ DBConnection(process.env.MONGO_URL)
 
 //middleware
 app.use(express.json())
+app.use(cookieParser())
 app.use(cors({
     origin:process.env.FRONTEND_URL,
     credentials:true
@@ -33,6 +36,8 @@ app.get('/api',(req,res)=>{
  
 })
 
+app.use('/api',authRouter)
+app.use('/api',userRouter)
 
 
 
