@@ -4,14 +4,14 @@ import  logo from "../assets/logo-transparent-png.png"
 function AuthLayouts({ children }) {
   return (
     <>
-      <headers className="flex justify-center items-center h-20 py-3 shadow-md bg-white">
+      <header className="flex justify-center items-center h-20 py-3 shadow-lg bg-white">
         <img src={logo}
         alt="logo"
         className="h-16"
         style={{ borderRadius: "50%" }}
         />
         
-      </headers>
+      </header>
       {children}
     </>
   );
