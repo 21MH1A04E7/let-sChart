@@ -1,47 +1,32 @@
-import express from 'express'
-import dotenv from 'dotenv'
-dotenv.config()
-import cors from 'cors'
-import os from 'os'
-import cluster from 'cluster'
-import cookieParser from 'cookie-parser'
+const express = require('express')
+const cors = require('cors')
+require('dotenv').config()
+const connectDB = require('./config/connectDB')
+const router = require('./routes/index')
+const cookiesParser = require('cookie-parser')
+const { app, server } = require('./socket/index')
 
-import DBConnection from './config/DBConnection.js'
-import authRouter from './router/auth.js'
-import userRouter from './router/user.js'
-
-const app=express();
-console.log(os.cpus().length)
-
-
-console.log(process.env.FRONTEND_URL)
-//middleware
+// const app = express()
 app.use(cors({
-    origin: process.env.FRONTEND_URL,
-    credentials: true
-}));
+    origin : process.env.FRONTEND_URL,
+    credentials : true
+}))
 app.use(express.json())
-app.use(cookieParser())
+app.use(cookiesParser())
 
+const PORT = process.env.PORT || 8080
 
-//routes
-app.get('/api',(req,res)=>{
-    res.json({message:"Hello from server"})
- 
-})
-
-app.use('/api',authRouter)
-app.use('/api',userRouter)
-
-
-
-const port=process.env.PROT_NO
-DBConnection(process.env.MONGO_URL)
-.then(()=>{
-    app.listen(port,()=>{
-        console.log(`Server is running at http://localhost:${port}`);
+app.get('/',(request,response)=>{
+    response.json({
+        message : "Server running at " + PORT
     })
 })
-.catch((err)=>{
-    console.log('database connection error',err);
+
+//api endpoints
+app.use('/api',router)
+
+connectDB().then(()=>{
+    server.listen(PORT,()=>{
+        console.log("server running at " + PORT)
+    })
 })

@@ -1,8 +1,9 @@
-.div1{
- display:flex;
- justify-content:center;
- align-items:center;
- height:100vh;
- width:100%;
- background-color:lightblue;
-}
+.scrollbar::-webkit-scrollbar{
+    width: 10px;
+  }
+  .scrollbar::-webkit-scrollbar-track{
+    @apply bg-slate-100 
+  }
+  .scrollbar::-webkit-scrollbar-thumb{
+    @apply bg-slate-200 rounded-full
+  }
