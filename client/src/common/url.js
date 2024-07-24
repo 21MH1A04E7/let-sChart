@@ -6,6 +6,13 @@ const Api={
         headers:{
             'Content-Type':'application/json'
         }
+    },
+    login:{
+        url:`${Url}/auth/signup`,
+        method:'POST',
+        headers:{
+            'Content-Type':'application/json'
+        }
     }
 }
 export default Api

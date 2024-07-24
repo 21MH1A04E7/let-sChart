@@ -1,6 +1,9 @@
 import React from "react";
 // import  logo from "../assets/logo-png.png"
 import  logo from "../assets/logo-transparent-png.png"
+// import logo from "../assets/logo-no-background.png"
+// import logo from "../assets/logo-color.png"
+// import logo from "../assets/logo-black.png"
 function AuthLayouts({ children }) {
   return (
     <>

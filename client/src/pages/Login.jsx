@@ -8,16 +8,13 @@ import toast from "react-hot-toast";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 
-function RegisterPage() {
+function Login() {
+  const navigate=useNavigate()
   const [showpass, setShowpass] = useState(true);
   const [data, setData] = useState({
-    name: "",
     email: "",
     password: "",
-    profilePic: "",
   });
-  const [uploadPhoto, setUploadPhoto] = useState("");
-  const navigate = useNavigate();
   const handleOnChange = (e) => {
     const { name, value } = e.target;
     setData((pre) => {
@@ -27,40 +24,24 @@ function RegisterPage() {
       };
     });
   };
-  // console.log(data);
-  const handleUploadPhoto = async (e) => {
-    const file = e.target.files[0];
-    const uploadPhoto = await uploadFile(file);
-    console.log("uploadfile", uploadPhoto);
-    setUploadPhoto(file);
-    setData((pre) => {
-      return {
-        ...pre,
-        profilePic: uploadPhoto.url,
-      };
-    });
-  };
-  const handleClearUploadPhoto = (e) => {
-    e.stopPropagation();
-    e.preventDefault();
-    setUploadPhoto(null);
-  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     e.stopPropagation();
     try {
-      if (data.password.length < 8) return;
-      const response = await axios.post(`${Api.register.url}`, data);
-      console.log("response", response);
+      const response = await axios({
+        method:Api.login.method,
+        url: Api.login.url,
+        data:data,
+        withCredentials:true,
+      });
+      console.log('response',response)
       toast.success(response?.data?.message);
       if (response?.data?.success) {
         setData({
-          name: "",
           email: "",
           password: "",
-          profilePic: "",
         });
-        navigate("/login");
+        navigate("/");
       }
     } catch (error) {
       toast.error(error?.response?.data?.message);
@@ -70,21 +51,8 @@ function RegisterPage() {
   return (
     <div className="mt-2">
       <div className="bg-white w-full max-w-md rounded-sm overflow-hidden p-4 mx-auto">
-        <h2>Welcome to Chat Master</h2>
+        <h2>Welcome to Chart Master</h2>
         <form className="grid gap-4 mt-5" onSubmit={handleSubmit}>
-          <div className="flex flex-col gap-1">
-            <label htmlFor="name">Name :</label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              placeholder="enter your name"
-              className="bg-slate-50 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-sm py-1"
-              onChange={handleOnChange}
-              value={data.name}
-              required
-            />
-          </div>
           <div className="flex flex-col gap-1">
             <label htmlFor="email">Email :</label>
             <input
@@ -119,52 +87,20 @@ function RegisterPage() {
                 {showpass ? <FaEyeSlash /> : <FaEye />}
               </span>
             </div>
-            <div className="text-red-500 text-xs italic mt-1">
-              {data.password.length < 8 &&
-                "Password must be at least 8 characters long"}
-            </div>
-          </div>
-          <div className="flex flex-col gap-1">
-            <label htmlFor="profile_pic" className="text-sm font-semibold">
-              Photo :
-              <div className="h-14 bg-slate-200 flex justify-center items-center border rounded hover:border-blue-500 cursor-pointer mt-1">
-                <p className="text-sm max-w-[300px] text-ellipsis line-clamp-1">
-                  {uploadPhoto?.name
-                    ? uploadPhoto?.name
-                    : "Upload profile photo"}
-                </p>
-                {uploadPhoto?.name && (
-                  <button
-                    className="text-lg ml-2 hover:text-red-600"
-                    onClick={handleClearUploadPhoto}
-                  >
-                    <IoClose />
-                  </button>
-                )}
-              </div>
-            </label>
-
-            <input
-              type="file"
-              id="profile_pic"
-              name="profile_pic"
-              className="bg-slate-100 px-2 py-1 focus:outline-primary hidden"
-              onChange={handleUploadPhoto}
-            />
           </div>
           <button className="bg-blue-500 text-lg px-4 py-1 hover:bg-blue-600 rounded font-bold text-white w-full">
-            Register
+            Login
           </button>
         </form>
         <p className="my-3 text-center">
-          Already have account ?{" "}
-          <Link to={"/login"} className="hover:text-blue-500 font-semibold">
-            Login
+          Dot't have account ?{" "}
+          <Link to={"/register"} className="hover:text-blue-500 font-semibold">
+            Signup
           </Link>
         </p>
       </div>
     </div>
-  );
+  )
 }
 
-export default RegisterPage;
+export default Login
