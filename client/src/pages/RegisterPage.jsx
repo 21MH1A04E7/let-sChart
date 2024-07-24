@@ -51,7 +51,7 @@ function RegisterPage() {
     try {
       if (data.password.length < 8) return;
       const response = await axios.post(`${Api.register.url}`, data);
-      console.log("response", response);
+      // console.log("response", response);
       toast.success(response?.data?.message);
       if (response?.data?.success) {
         setData({

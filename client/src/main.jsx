@@ -1,54 +1,69 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
-import './index.css'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import { Toaster } from 'react-hot-toast';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App.jsx";
+import "./index.css";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
+import { Provider } from "react-redux";
+import {store} from './redux/store.js'
 
 // Import your pages here
-import RegisterPage from './pages/RegisterPage.jsx'
-import ForgotPassword from './pages/ForgotPassword.jsx'
-import Home from './pages/Home.jsx'
-import Message from './components/Message.jsx'
-import AuthLayouts from './Layout/AuthLayouts.jsx'
-import Login from './pages/Login.jsx'
-const router=createBrowserRouter([
+import RegisterPage from "./pages/RegisterPage.jsx";
+import ForgotPassword from "./pages/ForgotPassword.jsx";
+import Home from "./pages/Home.jsx";
+import Message from "./components/Message.jsx";
+import AuthLayouts from "./Layout/AuthLayouts.jsx";
+import Login from "./pages/Login.jsx";
+const router = createBrowserRouter([
   {
-    path:"/",
-    element:<App/>,
-    children:[
+    path: "/",
+    element: <App />,
+    children: [
       {
-        path:"register",
-        element:<AuthLayouts><RegisterPage/></AuthLayouts>
+        path: "register",
+        element: (
+          <AuthLayouts>
+            <RegisterPage />
+          </AuthLayouts>
+        ),
       },
       {
-        path:'forgot-password',
-        element:<AuthLayouts><ForgotPassword/></AuthLayouts>
+        path: "forgot-password",
+        element: (
+          <AuthLayouts>
+            <ForgotPassword />
+          </AuthLayouts>
+        ),
       },
       {
-        path:'login',
-        element:<AuthLayouts><Login/></AuthLayouts>
+        path: "login",
+        element: (
+          <AuthLayouts>
+            <Login />
+          </AuthLayouts>
+        ),
       },
       {
-        path:"",
-        element:<Home/>,
-        children:[
+        path: "",
+        element: <Home />,
+        children: [
           {
-            path:':userId',
-            element:<Message/>
-          }
-        ]
-      }
-    ]
-  }
-])
+            path: ":userId",
+            element: <Message />,
+          },
+        ],
+      },
+    ],
+  },
+]);
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+ReactDOM.createRoot(document.getElementById("root")).render(
   <>
-    <RouterProvider router={router}>
-      <App />
-    </RouterProvider>
-    <Toaster/>
-  </>,
-)
-
+    <Provider store={store}>
+      <RouterProvider router={router}>
+        <App />
+      </RouterProvider>
+      <Toaster />
+    </Provider>
+  </>
+);

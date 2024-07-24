@@ -13,6 +13,13 @@ const Api={
         headers:{
             'Content-Type':'application/json'
         }
+    },
+    getUserDetails:{
+        url:`${Url}/user/getUserDetails`,
+        method:'GET',
+        headers:{
+            'Content-Type':'application/json',
+        }
     }
 }
 export default Api

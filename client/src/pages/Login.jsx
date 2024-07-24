@@ -1,15 +1,20 @@
 import React, { useState } from "react";
 import { IoClose } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
-import { uploadFile } from "../helpers/uploadFile.js";
+
 import axios from "axios";
 import Api from "../common/url.js";
 import toast from "react-hot-toast";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
+import { useSelector, useDispatch } from 'react-redux'
+import {setUser} from '../redux/userSlice.js'
 
 function Login() {
-  const navigate=useNavigate()
+  const dispatch=useDispatch()
+  const user=useSelector(state=>state.user)
+  console.log('user',user)
+  const navigate = useNavigate();
   const [showpass, setShowpass] = useState(true);
   const [data, setData] = useState({
     email: "",
@@ -29,14 +34,14 @@ function Login() {
     e.stopPropagation();
     try {
       const response = await axios({
-        method:Api.login.method,
+        method: Api.login.method,
         url: Api.login.url,
-        data:data,
-        withCredentials:true,
+        data: data,
+        withCredentials: true,
       });
-      console.log('response',response)
       toast.success(response?.data?.message);
       if (response?.data?.success) {
+        dispatch(setUser(response?.data?.data))
         setData({
           email: "",
           password: "",
@@ -100,7 +105,7 @@ function Login() {
         </p>
       </div>
     </div>
-  )
+  );
 }
 
-export default Login
+export default Login;
