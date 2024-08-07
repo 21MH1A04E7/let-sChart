@@ -80,7 +80,7 @@ const RegisterPage = () => {
   return (
     <div className='mt-5'>
         <div className='bg-white w-full max-w-md  rounded overflow-hidden p-4 mx-auto'>
-          <h3>Welcome to Chat app!</h3>
+          <h3>Welcome to Chat Master</h3>
 
           <form className='grid gap-4 mt-5' onSubmit={handleSubmit}>
               <div className='flex flex-col gap-1'>
@@ -157,14 +157,14 @@ const RegisterPage = () => {
 
 
               <button
-               className='bg-blue-400 text-lg  px-4 py-1 hover:bg-secondary rounded mt-2 font-bold text-white leading-relaxed tracking-wide'
+               className='bg-primary text-lg  px-4 py-1 hover:bg-secondary rounded mt-2 font-bold text-white leading-relaxed tracking-wide'
               >
                 Register
               </button>
 
           </form>
 
-          <p className='my-3 text-center'>Already have account ? <Link to={"/email"} className='hover:text-primary font-semibold'>Login</Link></p>
+          <p className='my-3 text-center'>Already have account ? <Link to={"/email"} className='hover:text-blue-600 font-semibold'>Login</Link></p>
         </div>
     </div>
   )

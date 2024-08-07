@@ -105,7 +105,7 @@ const CheckPasswordPage = () => {
               </div>
 
               <button
-               className='bg-blue-500 text-lg  px-4 py-1 hover:bg-secondary rounded mt-2 font-bold text-white leading-relaxed tracking-wide'
+               className='bg-primary text-lg  px-4 py-1 hover:bg-secondary rounded mt-2 font-bold text-white leading-relaxed tracking-wide'
               >
                 Login
               </button>
